@@ -139,7 +139,7 @@ body {
 }
 
 .cell.flagged::after {
-  content: "🚩";
+  content: "💣";
 }
 
 .cell.mine.revealed::after {
