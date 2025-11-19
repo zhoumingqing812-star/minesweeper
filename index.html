@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>扫雷</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="toolbar">
+        <h1>扫雷</h1>
+        <form id="config-form">
+          <label>
+            宽度
+            <input type="number" id="width-input" min="5" max="30" value="9" />
+          </label>
+          <label>
+            高度
+            <input type="number" id="height-input" min="5" max="30" value="9" />
+          </label>
+          <label>
+            地雷数
+            <input type="number" id="mine-input" min="1" max="200" value="10" />
+          </label>
+          <button type="submit">新游戏</button>
+        </form>
+        <div class="status">
+          <span id="mine-counter">💣 10</span>
+          <span id="timer">⏱ 0.0s</span>
+          <span id="game-message"></span>
+        </div>
+      </header>
+
+      <section class="board-wrapper">
+        <div id="board" class="board" role="grid" aria-label="扫雷棋盘"></div>
+      </section>
+
+      <footer class="help">
+        <p>左键：翻开 | 右键：插旗/取消 | 双击数字：快速打开周围格子</p>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

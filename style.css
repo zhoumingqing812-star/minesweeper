@@ -1,0 +1,181 @@
+:root {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light dark;
+  --bg: #f5f7fb;
+  --fg: #1e2330;
+  --panel: #ffffffcc;
+  --border: #c7cfdd;
+  --accent: #2f80ed;
+  --danger: #eb5757;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #e6eeff, #fefefe 70%);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.app {
+  width: min(960px, 100%);
+  background: var(--panel);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 60px -40px rgba(15, 23, 42, 0.4);
+  padding: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.toolbar h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+#config-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#config-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+#config-form input {
+  width: 80px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+#config-form button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#config-form button:hover {
+  opacity: 0.9;
+}
+
+.status {
+  display: flex;
+  gap: 12px;
+  font-weight: 600;
+  min-width: 160px;
+  justify-content: flex-end;
+}
+
+.board-wrapper {
+  margin-top: 24px;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+}
+
+.board {
+  display: grid;
+  gap: 4px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.cell {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #f0f5ff;
+  transition: transform 60ms ease, background 120ms ease;
+}
+
+.cell:active {
+  transform: scale(0.96);
+}
+
+.cell.revealed {
+  background: #dfe9ff;
+  cursor: default;
+  border-color: #d0d8e8;
+}
+
+.cell.mine.revealed {
+  background: var(--danger);
+  color: white;
+}
+
+.cell.flagged::after {
+  content: "🚩";
+}
+
+.cell.mine.revealed::after {
+  content: "💣";
+}
+
+.cell.number-1 {
+  color: #2f80ed;
+}
+.cell.number-2 {
+  color: #27ae60;
+}
+.cell.number-3 {
+  color: #eb5757;
+}
+.cell.number-4 {
+  color: #9b51e0;
+}
+.cell.number-5 {
+  color: #f2994a;
+}
+.cell.number-6,
+.cell.number-7,
+.cell.number-8 {
+  color: #333;
+}
+
+.help {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: #4a5568;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .cell {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+}
+
