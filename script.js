@@ -1,4 +1,6 @@
 const boardElement = document.getElementById("board");
+const boardWrapper = document.querySelector(".board-wrapper");
+const appElement = document.querySelector(".app");
 const form = document.getElementById("config-form");
 const widthInput = document.getElementById("width-input");
 const heightInput = document.getElementById("height-input");
@@ -8,6 +10,34 @@ const timerLabel = document.getElementById("timer");
 const messageLabel = document.getElementById("game-message");
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+const CELL_GAP = 4;
+const MIN_CELL_SIZE = 20;
+const MAX_CELL_SIZE = 36;
+
+const getAvailableBoardWidth = () => {
+  const wrapperWidth = boardWrapper?.clientWidth ?? 0;
+  const appWidth = appElement?.clientWidth ?? 0;
+  const fallback = window.innerWidth || 320;
+  const baseWidth = Math.max(wrapperWidth, appWidth, fallback);
+  return Math.max(baseWidth - 32, 200); // subtract wrapper padding
+};
+
+const computeCellSize = (columns) => {
+  const availableWidth = getAvailableBoardWidth();
+  const totalGap = CELL_GAP * (columns - 1);
+  const usableWidth = Math.max(availableWidth - totalGap, MIN_CELL_SIZE * columns);
+  const size = Math.floor(usableWidth / columns);
+  return clamp(size, MIN_CELL_SIZE, MAX_CELL_SIZE);
+};
+
+const applyCellSize = (columns) => {
+  const size = computeCellSize(columns);
+  boardElement.style.setProperty("--cell-size", `${size}px`);
+  boardElement.style.setProperty(
+    "grid-template-columns",
+    `repeat(${columns}, var(--cell-size))`
+  );
+};
 
 const recommendMines = (width, height) => {
   const total = width * height;
@@ -99,7 +129,7 @@ function startNewGame(width, height, mines) {
     startTime: null,
   };
   messageLabel.textContent = "";
-  boardElement.style.setProperty("grid-template-columns", `repeat(${width}, 32px)`);
+  applyCellSize(width);
   boardElement.innerHTML = "";
   state.board = buildBoard(width, height, mines);
   updateMineCounter();
@@ -370,6 +400,9 @@ const minesweeperApi = {
 
 if (typeof window !== "undefined") {
   window.minesweeper = minesweeperApi;
+  window.addEventListener("resize", () => {
+    applyCellSize(state.width);
+  });
 }
 
 init();

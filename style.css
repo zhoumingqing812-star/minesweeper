@@ -7,6 +7,7 @@
   --border: #c7cfdd;
   --accent: #2f80ed;
   --danger: #eb5757;
+  --cell-size: 32px;
 }
 
 * {
@@ -96,6 +97,7 @@ body {
   padding: 16px;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 12px;
+  overflow-x: auto;
 }
 
 .board {
@@ -103,11 +105,12 @@ body {
   gap: 4px;
   user-select: none;
   touch-action: manipulation;
+  width: max-content;
 }
 
 .cell {
-  width: 32px;
-  height: 32px;
+  width: var(--cell-size);
+  height: var(--cell-size);
   border-radius: 6px;
   border: 1px solid var(--border);
   display: inline-flex;
@@ -172,9 +175,10 @@ body {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --cell-size: 28px;
+  }
   .cell {
-    width: 28px;
-    height: 28px;
     font-size: 0.85rem;
   }
 }
