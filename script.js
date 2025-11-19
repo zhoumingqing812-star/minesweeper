@@ -13,6 +13,8 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const CELL_GAP = 4;
 const MIN_CELL_SIZE = 20;
 const MAX_CELL_SIZE = 36;
+const DEFAULT_WIDTH = 9;
+const DEFAULT_HEIGHT = 9;
 
 const getAvailableBoardWidth = () => {
   const wrapperWidth = boardWrapper?.clientWidth ?? 0;
@@ -45,12 +47,14 @@ const recommendMines = (width, height) => {
   return clamp(Math.round(total * density), 1, total - 1);
 };
 
+const DEFAULT_MINES = recommendMines(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
 let state = {
-  width: 9,
-  height: 9,
-  mines: 10,
+  width: DEFAULT_WIDTH,
+  height: DEFAULT_HEIGHT,
+  mines: DEFAULT_MINES,
   board: [],
-  mineLeft: 10,
+  mineLeft: DEFAULT_MINES,
   revealedSafe: 0,
   gameOver: false,
   started: false,
@@ -60,6 +64,10 @@ let state = {
 
 function init() {
   let mineInputDirty = false;
+
+  widthInput.value = `${state.width}`;
+  heightInput.value = `${state.height}`;
+  mineInput.value = `${state.mines}`;
 
   const updateMineSuggestion = () => {
     const nextWidth = clamp(parseInt(widthInput.value, 10) || state.width, 5, 30);
